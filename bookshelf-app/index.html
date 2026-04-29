@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookshelf App</title>
+
+    <!-- Impor script kamu di sini -->
+    <!-- Lampirkan `defer` jika pemanggilan dilakukan dalam <head> -->
+    <script defer src="js/main.js"></script>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/bookshelf-style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bitter:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <header>
+      <h1>My Library</h1>
+    </header>
+
+    <main>
+      <div class="page">
+        <div class="wrapper">
+          <div class="container-form" id="add-todo">
+            <h2 class="container-header" id="formHeader">Tambah Buku Baru</h2>
+            <section>
+              <form class="form" id="bookForm" data-testid="bookForm">
+                <div class="form-group-title">
+                  <label for="bookFormTitle">Judul</label>
+                  <input id="bookFormTitle" type="text" required data-testid="bookFormTitleInput" placeholder="Masukkan judul buku" />
+                </div>
+                <div class="form-group-title">
+                  <label for="bookFormAuthor">Penulis</label>
+                  <input id="bookFormAuthor" type="text" required data-testid="bookFormAuthorInput" placeholder="Masukkan nama penulis" />
+                </div>
+                <div class="form-group-title">
+                  <label for="bookFormYear">Tahun</label>
+                  <input id="bookFormYear" type="number" required data-testid="bookFormYearInput" placeholder="Masukkan tahun terbit buku" />
+                </div>
+                <div class="form-group form-row">
+                  <label for="bookFormIsComplete">Selesai dibaca</label>
+                  <input
+                    id="bookFormIsComplete"
+                    type="checkbox"
+                    data-testid="bookFormIsCompleteCheckbox"
+                  />
+                </div>
+                <button class="btn btn-primary submit-add" id="bookFormSubmit" type="submit" data-testid="bookFormSubmitButton">
+                  Masukkan Buku ke Rak <!-- <span>Belum selesai dibaca</span> -->
+                </button>
+              </form>
+            </section>
+          </div>
+        </div>
+
+        <div class="container-search">
+          <section>
+            <h2>Cari Buku</h2>
+              <form class="form form-search" id="searchBook" data-testid="searchBookForm">
+                <label for="searchBookTitle">Judul / Penulis</label>
+                <input id="searchBookTitle" type="text" data-testid="searchBookFormTitleInput" placeholder="Masukkan kata kunci judul buku atau nama penulis" />
+                <button class="btn btn-primary submit-search" id="searchSubmit" type="submit" data-testid="searchBookFormSubmitButton">
+                  Cari
+                </button>
+              </form>
+          </section>
+        </div>
+        
+        <div class="bookshelves">
+          <div class="container">
+            <h2 class="container-header">Belum Selesai Dibaca</h2>
+            <section>
+              <div id="incompleteBookList" data-testid="incompleteBookList">
+                <!-- 
+                  Ini adalah struktur HTML untuk masing-masing buku.
+                  Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
+                -->
+                <div data-bookid="123123123" data-testid="bookItem">
+                  <h3 data-testid="bookItemTitle">Judul Buku 1</h3>
+                  <p data-testid="bookItemAuthor">Penulis: Penulis Buku 1</p>
+                  <p data-testid="bookItemYear">Tahun: 2030</p>
+                  <div>
+                    <button data-testid="bookItemIsCompleteButton">Selesai dibaca</button>
+                    <button data-testid="bookItemDeleteButton">Hapus Buku</button>
+                    <button data-testid="bookItemEditButton">Edit Buku</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          
+          <div class="container">
+            <h2 class="container-header">Selesai Dibaca</h2>
+            <section>
+              <div id="completeBookList" data-testid="completeBookList">
+                <!-- 
+                  Ini adalah struktur HTML untuk masing-masing buku.
+                  Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
+                -->
+                <div data-bookid="456456456" data-testid="bookItem">
+                  <h3 data-testid="bookItemTitle">Judul Buku 2</h3>
+                  <p data-testid="bookItemAuthor">Penulis: Penulis Buku 2</p>
+                  <p data-testid="bookItemYear">Tahun: 2030</p>
+                  <div>
+                    <button data-testid="bookItemIsCompleteButton">Selesai dibaca</button>
+                    <button data-testid="bookItemDeleteButton">Hapus Buku</button>
+                    <button data-testid="bookItemEditButton">Edit Buku</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>      
+    </main>
+
+    <!-- Alert Message -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+    
+    <!-- Item Removal Confirmation -->
+    <div id="confirmOverlay" class="overlay hidden">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <h3 id="confirmTitle">Konfirmasi</h3>
+        <p id="confirmMessage"></p>
+        <div class="modal-actions">
+          <button id="confirmCancel" type="button">Batal</button>
+          <button id="confirmOk" type="button">Hapus</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
